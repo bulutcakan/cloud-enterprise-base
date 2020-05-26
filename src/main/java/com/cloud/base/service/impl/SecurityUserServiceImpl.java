@@ -1,10 +1,11 @@
 package com.cloud.base.service.impl;
 
 import com.cloud.base.constans.MailType;
+import com.cloud.base.dto.JwtResponseDTO;
 import com.cloud.base.dto.Mail;
 import com.cloud.base.dto.PasswordDTO;
+import com.cloud.base.dto.RoleDTO;
 import com.cloud.base.dto.UserDTO;
-import com.cloud.base.dto.JwtResponseDTO;
 import com.cloud.base.exception.TokenException;
 import com.cloud.base.models.PasswordResetToken;
 import com.cloud.base.models.User;
@@ -27,9 +28,11 @@ import org.springframework.stereotype.Service;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -113,11 +116,16 @@ public class SecurityUserServiceImpl implements SecurityUserService {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        return new JwtResponseDTO(jwt,
-                userDetails.getId(),
-                userDetails.getUsername(),
-                userDetails.getEmail(),
-                roles);
+        Set<RoleDTO> roleDTOSet = new HashSet<>();
+        roles.forEach(s -> {
+            RoleDTO roleDTO = new RoleDTO();
+            roleDTO.setRoleName(s);
+            roleDTOSet.add(roleDTO);
+
+        });
+        userDTO.setRole(roleDTOSet);
+        userDTO.setPassword(null);
+        return new JwtResponseDTO(jwt, userDTO);
     }
 
     @Override

@@ -14,12 +14,14 @@ import com.cloud.base.service.UserService;
 import com.cloud.base.util.JwtUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -80,6 +82,22 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         securityUserService.sendActivationCode(user.getEmail());
         return "User registered successfully!";
+    }
+
+
+    @Override
+    public List<UserDTO> getAllUser(Pageable pageable) {
+        return null;
+    }
+
+    @Override
+    public void delete(Long id) {
+
+    }
+
+    @Override
+    public UserDTO update(UserDTO userDTO) {
+        return null;
     }
 
 }

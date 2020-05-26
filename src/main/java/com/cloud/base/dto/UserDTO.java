@@ -1,5 +1,6 @@
 package com.cloud.base.dto;
 
+import com.cloud.base.constans.marker.OnCreate;
 import com.cloud.base.validation.ValidPassword;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
@@ -23,11 +24,11 @@ public class UserDTO implements Serializable {
     private String username;
 
     @NotBlank
-    @Size(max = 50)
+    @Size(min = 6, max = 50)
     @Email
     private String email;
 
-    @ValidPassword
+    @ValidPassword(groups = OnCreate.class)
     private String password;
 
     private Boolean active;
