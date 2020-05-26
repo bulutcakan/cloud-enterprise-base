@@ -1,5 +1,6 @@
 package com.cloud.base.controllers;
 
+import com.cloud.base.response.Response;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,25 +12,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/test")
 public class TestController {
 	@GetMapping("/all")
-	public String allAccess() {
-		return "Public Content.";
+	public Response allAccess() {
+		return new Response("Public Content.");
 	}
 	
 	@GetMapping("/user")
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-	public String userAccess() {
-		return "User Content.";
+	public Response userAccess() {
+		return new Response("User Content.");
 	}
 
 	@GetMapping("/mod")
 	@PreAuthorize("hasRole('MODERATOR')")
-	public String moderatorAccess() {
-		return "Moderator Board.";
+	public Response moderatorAccess() {
+		return new Response("Moderator Board.");
 	}
 
 	@GetMapping("/admin")
 	@PreAuthorize("hasRole('ADMIN')")
-	public String adminAccess() {
-		return "Admin Board.";
+	public Response adminAccess() {
+		return new Response("Admin Board.");
 	}
 }
