@@ -1,8 +1,7 @@
 package com.cloud.base.controllers;
 
 import com.cloud.base.dto.PasswordDTO;
-import com.cloud.base.dto.request.LoginRequest;
-import com.cloud.base.dto.request.SignupRequest;
+import com.cloud.base.dto.UserDTO;
 import com.cloud.base.response.Response;
 import com.cloud.base.service.SecurityUserService;
 import com.cloud.base.service.UserService;
@@ -30,13 +29,13 @@ public class AuthController {
 	SecurityUserService securityUserService;
 
 	@PostMapping("/signin")
-	public Response authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-		return new Response(securityUserService.authenticateUser(loginRequest));
+	public Response authenticateUser(@Valid @RequestBody UserDTO userDTO) {
+		return new Response(securityUserService.authenticateUser(userDTO));
 	}
 
 	@PostMapping("/signup")
-	public Response registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-		return new Response(userService.createUser(signUpRequest));
+	public Response registerUser(@Valid @RequestBody UserDTO userDTO) {
+		return new Response(userService.createUser(userDTO));
 	}
 
 	@PostMapping("/resetPassword")

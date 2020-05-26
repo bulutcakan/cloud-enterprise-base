@@ -1,8 +1,8 @@
-package com.cloud.base.dto.response;
+package com.cloud.base.dto;
 
 import java.util.List;
 
-public class JwtResponse {
+public class JwtResponseDTO {
 	private String token;
 	private String type = "Bearer";
 	private Long id;
@@ -10,7 +10,7 @@ public class JwtResponse {
 	private String email;
 	private List<String> roles;
 
-	public JwtResponse(String accessToken, Long id, String username, String email, List<String> roles) {
+	public JwtResponseDTO(String accessToken, Long id, String username, String email, List<String> roles) {
 		this.token = accessToken;
 		this.id = id;
 		this.username = username;

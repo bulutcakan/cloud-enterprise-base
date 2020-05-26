@@ -1,7 +1,7 @@
 package com.cloud.base.response;
 
-import com.cloud.base.exception.ErrorCode;
-import com.cloud.base.exception.ErrorCodeAware;
+import com.cloud.base.exception.code.ErrorCode;
+import com.cloud.base.exception.aware.ErrorCodeAware;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Getter;
 import lombok.Setter;

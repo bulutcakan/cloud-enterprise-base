@@ -1,4 +1,4 @@
-package com.cloud.base.exception;
+package com.cloud.base.exception.code;
 
 public final class ErrorCode extends AbstractErrorCode {
     private static final long serialVersionUID = 1L;
@@ -27,7 +27,7 @@ public final class ErrorCode extends AbstractErrorCode {
         ErrorCode SERVICE_UNAVAILABLE = new ErrorCode(99);
     }
 
-    @Section(min = 5000, max = 6000)
+    @Section(min = 100, max = 200)
     public interface User {
         ErrorCode INVALID_USER = new ErrorCode(5000);
         ErrorCode USER_NOT_EXIST = new ErrorCode(5001, "User not found!");
@@ -37,10 +37,9 @@ public final class ErrorCode extends AbstractErrorCode {
         ErrorCode USER_DOES_NOT_HAVE_PERMISSION = new ErrorCode(5005, "User does not have permission for this operation");
         ErrorCode PASSWORD_MISMATCH = new ErrorCode(5006, "Password does not match");
     }
-    @Section(min = 8000, max = 9000)
-    public interface Search {
-        ErrorCode INVALID_SEARCH_PARAM = new ErrorCode(8000);
-        ErrorCode NO_SEARCH_RESULT = new ErrorCode(8001);
+    @Section(min = 200, max = 300)
+    public interface ROLE {
+        ErrorCode ROLE_NOT_FOUND = new ErrorCode(201);
 
     }
 }

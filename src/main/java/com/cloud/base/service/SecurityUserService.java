@@ -1,8 +1,8 @@
 package com.cloud.base.service;
 
+import com.cloud.base.dto.JwtResponseDTO;
 import com.cloud.base.dto.PasswordDTO;
-import com.cloud.base.dto.request.LoginRequest;
-import com.cloud.base.dto.response.JwtResponse;
+import com.cloud.base.dto.UserDTO;
 
 public interface SecurityUserService {
 
@@ -10,7 +10,7 @@ public interface SecurityUserService {
 
     String sendActivationCode(String email);
 
-    JwtResponse authenticateUser(LoginRequest loginRequest);
+    JwtResponseDTO authenticateUser(UserDTO userDTO);
 
     String changePassword(PasswordDTO passwordDTO);
 

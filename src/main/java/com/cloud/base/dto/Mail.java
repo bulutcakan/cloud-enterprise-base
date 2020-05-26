@@ -1,6 +1,7 @@
 package com.cloud.base.dto;
 
 import com.cloud.base.constans.MailType;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import java.util.Map;
 
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Mail implements Serializable {
 
     private String from;

@@ -1,5 +1,6 @@
-package com.cloud.base.exception;
+package com.cloud.base.exception.code;
 
+import com.cloud.base.exception.base.CloudServiceException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

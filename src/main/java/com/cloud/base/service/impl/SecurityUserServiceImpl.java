@@ -3,8 +3,8 @@ package com.cloud.base.service.impl;
 import com.cloud.base.constans.MailType;
 import com.cloud.base.dto.Mail;
 import com.cloud.base.dto.PasswordDTO;
-import com.cloud.base.dto.request.LoginRequest;
-import com.cloud.base.dto.response.JwtResponse;
+import com.cloud.base.dto.UserDTO;
+import com.cloud.base.dto.JwtResponseDTO;
 import com.cloud.base.exception.TokenException;
 import com.cloud.base.models.PasswordResetToken;
 import com.cloud.base.models.User;
@@ -101,9 +101,9 @@ public class SecurityUserServiceImpl implements SecurityUserService {
     }
 
     @Override
-    public JwtResponse authenticateUser(LoginRequest loginRequest) {
+    public JwtResponseDTO authenticateUser(UserDTO userDTO) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+                new UsernamePasswordAuthenticationToken(userDTO.getUsername(), userDTO.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
@@ -113,7 +113,7 @@ public class SecurityUserServiceImpl implements SecurityUserService {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        return new JwtResponse(jwt,
+        return new JwtResponseDTO(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
@@ -155,7 +155,6 @@ public class SecurityUserServiceImpl implements SecurityUserService {
         resetToken.setUser(user);
         resetToken.setExpiryDate(DateUtils.addDays(new Date(), 1));
         passwordResetTokenRepository.save(resetToken);
-        //mail gonder
     }
 
     public boolean isValidPasswordResetToken(String token) {

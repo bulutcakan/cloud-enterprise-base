@@ -1,4 +1,4 @@
-package com.cloud.base.exception;
+package com.cloud.base.exception.base;
 
 public class JSONException extends RuntimeException {
     private static final long serialVersionUID = 1L;

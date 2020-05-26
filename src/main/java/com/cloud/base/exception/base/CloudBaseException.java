@@ -1,4 +1,7 @@
-package com.cloud.base.exception;
+package com.cloud.base.exception.base;
+
+import com.cloud.base.exception.aware.ErrorCodeAware;
+import com.cloud.base.exception.code.ErrorCode;
 
 public abstract class CloudBaseException extends RuntimeException implements ErrorCodeAware {
     private static final long serialVersionUID = 1L;

@@ -1,11 +1,10 @@
 package com.cloud.base.service;
 
-import com.cloud.base.dto.Mail;
-import com.cloud.base.dto.request.SignupRequest;
+import com.cloud.base.dto.UserDTO;
 
 public interface UserService {
 
-    String createUser(SignupRequest signupRequest);
+    String createUser(UserDTO userDTO);
 
 
 }

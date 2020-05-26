@@ -1,4 +1,4 @@
-package com.cloud.base.exception;
+package com.cloud.base.exception.base;
 
 
 import com.cloud.base.response.Response;
