@@ -1,5 +1,7 @@
 package com.cloud.base.service.impl;
 
+import com.cloud.base.constans.MailType;
+import com.cloud.base.dto.Mail;
 import com.cloud.base.dto.PasswordDTO;
 import com.cloud.base.dto.request.LoginRequest;
 import com.cloud.base.dto.response.JwtResponse;
@@ -8,6 +10,7 @@ import com.cloud.base.models.PasswordResetToken;
 import com.cloud.base.models.User;
 import com.cloud.base.repository.PasswordResetTokenRepository;
 import com.cloud.base.repository.UserRepository;
+import com.cloud.base.service.MailService;
 import com.cloud.base.service.SecurityUserService;
 import com.cloud.base.util.DateUtils;
 import com.cloud.base.util.JwtUtils;
@@ -23,7 +26,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -46,16 +51,53 @@ public class SecurityUserServiceImpl implements SecurityUserService {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Autowired
+    MailService mailService;
+
     @Override
     public String resetPassword(String email) {
+        String token = getGeneratedToken(email);
+        PasswordResetToken resetToken = passwordResetTokenRepository.findByToken(token).orElseThrow(() -> new TokenException(""));
+        User user = resetToken.getUser();
+        Mail mail = new Mail();
+        mail.setMailTo(user.getEmail());
+        mail.setSubject("Reset Password");
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("name", user.getUsername());
+        model.put("token", token);
+        mail.setProps(model);
+        mail.setMailType(MailType.RESET_PASSWORD);
+        mailService.sendEmail(mail);
+        //MAIL GONDER
+        return "Reset Email Sent to " + email;
+    }
+
+    private String getGeneratedToken(String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
         if (!userOptional.isPresent())
             throw new UsernameNotFoundException("");
 
         String token = UUID.randomUUID().toString();
-        createPasswordResetTokenForUser(userOptional.get(), token);
+        createTokenForUser(userOptional.get(), token);
+        return token;
+    }
 
-        return "Email Sent to "+email;
+    @Override
+    public String sendActivationCode(String email) {
+        String token = getGeneratedToken(email);
+        //MAIL GONDER
+        PasswordResetToken resetToken = passwordResetTokenRepository.findByToken(token).orElseThrow(() -> new TokenException(""));
+        User user = resetToken.getUser();
+        Mail mail = new Mail();
+        mail.setMailTo(user.getEmail());
+        mail.setSubject("Register Account");
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("name", user.getUsername());
+        model.put("token", token);
+        mail.setProps(model);
+        mail.setMailType(MailType.ACTIVATE);
+        mailService.sendEmail(mail);
+        return "Active Email Sent to " + email;
     }
 
     @Override
@@ -92,7 +134,22 @@ public class SecurityUserServiceImpl implements SecurityUserService {
         return "Password changed";
     }
 
-    public void createPasswordResetTokenForUser(User user, String token) {
+    @Override
+    public String activateUser(String token) {
+        if (isValidPasswordResetToken(token)) {
+            PasswordResetToken passwordResetToken = passwordResetTokenRepository.
+                    findByToken(token).orElseThrow(() -> new TokenException("Token invalid"));
+            User user = passwordResetToken.getUser();
+            user.setActive(true);
+            passwordResetTokenRepository.delete(passwordResetToken);
+            userRepository.save(user);
+            return "User account activated";
+
+        }
+        return null;
+    }
+
+    public void createTokenForUser(User user, String token) {
         PasswordResetToken resetToken = new PasswordResetToken();
         resetToken.setToken(token);
         resetToken.setUser(user);

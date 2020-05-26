@@ -48,4 +48,9 @@ public class AuthController {
 	public Response changePassword(@RequestBody @Valid PasswordDTO passwordDTO) {
 		return new Response(securityUserService.changePassword(passwordDTO));
 	}
+
+	@PostMapping("/activateUser")
+	public Response activateUser(@NotEmpty @RequestParam("token") String token) {
+		return new Response(securityUserService.activateUser(token));
+	}
 }

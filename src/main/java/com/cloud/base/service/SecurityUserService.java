@@ -8,7 +8,11 @@ public interface SecurityUserService {
 
     String resetPassword(String email);
 
+    String sendActivationCode(String email);
+
     JwtResponse authenticateUser(LoginRequest loginRequest);
 
     String changePassword(PasswordDTO passwordDTO);
+
+    String activateUser(String token);
 }
