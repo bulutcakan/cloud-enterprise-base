@@ -3,7 +3,6 @@ package com.cloud.base.controllers;
 import com.cloud.base.response.Response;
 import com.cloud.base.service.AzureFileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,8 +41,8 @@ public class FileController {
     }
 
     @DeleteMapping
-    public Response delete(@RequestParam String containerName, @RequestParam String blobName) {
-        azureFileService.deleteBlob(containerName, blobName);
+    public Response delete(@RequestParam String blobName) {
+        azureFileService.deleteBlob(blobName);
         return new Response("OK");
     }
 

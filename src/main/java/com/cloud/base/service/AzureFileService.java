@@ -14,4 +14,7 @@ public interface AzureFileService {
     List listBlobs(String containerName);
 
     void deleteBlob(String containerName, String blobName);
+
+    void deleteBlob(String blobName);
+
 }

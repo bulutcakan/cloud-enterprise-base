@@ -13,6 +13,7 @@ import com.microsoft.azure.storage.blob.ListBlobItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +32,9 @@ public class AzureServiceImpl implements AzureFileService {
 
     @Autowired
     private CloudBlobContainer cloudBlobContainer;
+
+    @Autowired
+    private Environment environment;
 
     @Override
     public boolean createContainer(String containerName) {
@@ -100,5 +104,12 @@ public class AzureServiceImpl implements AzureFileService {
             logger.error(e.getMessage());
             e.printStackTrace();
         }
+    }
+
+
+    @Override
+    public void deleteBlob(String blobName) {
+        String containerName = environment.getProperty("azure.storage.container.name");
+        deleteBlob(containerName, blobName);
     }
 }
