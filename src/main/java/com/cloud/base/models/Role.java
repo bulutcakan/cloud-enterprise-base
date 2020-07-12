@@ -1,9 +1,20 @@
 package com.cloud.base.models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "roles")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,10 +23,6 @@ public class Role {
 	@Enumerated(EnumType.STRING)
 	@Column(length = 20)
 	private RoleEnum name;
-
-	public Role() {
-
-	}
 
 	public Role(RoleEnum name) {
 		this.name = name;

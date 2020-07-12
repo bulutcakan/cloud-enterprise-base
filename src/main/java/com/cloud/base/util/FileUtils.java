@@ -46,7 +46,7 @@ public class FileUtils {
     }
 
     public static String getUniqueFileName(String originalFileName) {
-        return UUID.randomUUID().toString() + getExtensionOfFile(originalFileName);
+        return UUID.randomUUID().toString() +"."+ getExtensionOfFile(originalFileName).get();
     }
 
     public static boolean isImage(File file) {
