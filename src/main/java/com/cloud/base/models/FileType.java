@@ -11,7 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.Set;
 
 @Entity
 @Table(name = "fileType")
@@ -26,5 +28,8 @@ public class FileType {
     private Long id;
 
     @Column(unique = true)
-    private String type;
+    private String name;
+
+    @OneToMany(mappedBy = "fileType")
+    private Set<UploadedFiles> files;
 }

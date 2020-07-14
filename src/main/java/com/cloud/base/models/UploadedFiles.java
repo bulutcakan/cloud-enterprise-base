@@ -30,6 +30,10 @@ public class UploadedFiles {
     private String URL;
 
     @ManyToOne
+    @JoinColumn(name = "file_type_id")
+    private FileType fileType;
+
+    @ManyToOne
     @JoinColumn(name = "user_file_id")
     private User user;
 }

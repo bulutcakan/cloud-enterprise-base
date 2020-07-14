@@ -4,22 +4,16 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class SpecialtiesDTO implements Serializable {
+public class FileTypeDTO implements Serializable {
 
     private Long id;
 
-    @NotBlank
-    @Size(min = 3, max = 20)
+    @NotNull
     private String name;
-
-    private UploadedFilesDTO file;
-
-
 }
